@@ -27,5 +27,31 @@ public class FamousPeopleController {
     result.addObject("gender", Gender.values());
     return result;
   }
+  @GetMapping(path = "/", params = "query")
+  public ModelAndView search(String query) {
+    ModelAndView result = new ModelAndView("index");
+    result.addObject("people", service.getByName(query));
+    result.addObject("gender", Gender.values());
+    result.addObject("query", query);
+    return result;
+  }
 
+  @PostMapping(path = "/delete", params = "id")
+  public String delete(int id) {
+    service.deleteById(id);
+    return "redirect:/";
+  }
+  @PostMapping("/pridej")
+  public String append(Person person) {
+    service.append(person);
+        return "redirect:/";
+  }
 }
+
+   /* @GetMapping("/test")
+    public String redirect(){
+      return "redirect:/test-po-presmerovani";*/
+
+
+
+
